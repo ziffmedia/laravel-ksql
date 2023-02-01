@@ -1,0 +1,31 @@
+{
+    "name": "ziffmedia/laravel-ksql",
+    "type": "library",
+    "require": {
+        "symfony/http-client": "^6.2"
+    },
+
+    "require-dev": {
+        "php": "^8.0",
+        "orchestra/testbench": "^7.19",
+        "laravel/pint": "^1.4",
+        "pestphp/pest": "^1.22"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Ziffmedia\\LaravelKsql\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Josh Butts",
+            "email": "josh.butts@ziffmedia.com"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
