@@ -1,15 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="MessDetectorOptionsConfiguration">
-    <option name="transferred" value="true" />
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="PHPCSFixerOptionsConfiguration">
-    <option name="transferred" value="true" />
+  <component name="ChangeListManager">
+    <list default="true" id="2b7be0c6-8229-48a1-b0db-fa138be13786" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Client.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/KsqlQueryResultReceived.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PushQuery.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/laravel-ksql.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/laravel-ksql.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/ksql.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/ksql.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/demo/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/demo/app/Console/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" afterPath="$PROJECT_DIR$/demo/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/app/Providers/EventServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/demo/app/Providers/EventServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/demo/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/KsqlConsumerCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ConsumerCommand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/KsqlServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/KsqlServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/KsqlStreamChanged.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/KsqlStreamChanged.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/KsqlStreamingClient.php" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="PHPCodeSnifferOptionsConfiguration">
-    <option name="transferred" value="true" />
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
   </component>
-  <component name="PhpIncludePathManager">
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
@@ -146,13 +174,41 @@
       <path value="$PROJECT_DIR$/vendor/amphp/parser" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="8.1">
-    <option name="suggestChangeDefaultLanguageLevel" value="false" />
+  <component name="ProjectId" id="2L9qd9vH9SKJlaFjd3qNIBjPwr7" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PhpStanOptionsConfiguration">
-    <option name="transferred" value="true" />
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;php.override.implement.member.chooser.php.doc&quot;: &quot;NONE&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2b7be0c6-8229-48a1-b0db-fa138be13786" name="Changes" comment="" />
+      <created>1675293731209</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1675293731209</updated>
+      <workItem from="1675293732447" duration="2448000" />
+      <workItem from="1675441292187" duration="598000" />
+      <workItem from="1676237334573" duration="12031000" />
+      <workItem from="1676476931079" duration="7258000" />
+    </task>
+    <servers />
   </component>
-  <component name="PsalmOptionsConfiguration">
-    <option name="transferred" value="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

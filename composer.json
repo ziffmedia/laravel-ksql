@@ -2,11 +2,11 @@
     "name": "ziffmedia/laravel-ksql",
     "type": "library",
     "require": {
-        "symfony/http-client": "^6.2"
+        "php": "^8.1",
+        "ziffmedia/ksql": "^0.1"
     },
 
     "require-dev": {
-        "php": "^8.0",
         "orchestra/testbench": "^7.19",
         "laravel/pint": "^1.4",
         "pestphp/pest": "^1.22"
@@ -14,7 +14,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Ziffmedia\\LaravelKsql\\": "src/"
+            "ZiffMedia\\LaravelKsql\\": "src/"
         }
     },
     "authors": [
