@@ -19,7 +19,7 @@ use Illuminate\Console\Command;
  */
 class ConsumerCommand extends Command
 {
-    protected $signature = 'ksql:consume';
+    protected $signature = 'ksql:consume {queryName?}';
 
     protected $description = 'Consume KSQL streams and emit events';
 
@@ -31,9 +31,17 @@ class ConsumerCommand extends Command
             config('ksql.auth.password')
         );
 
+
+        $queryConfigs = [];
+        if ($queryName = $this->argument('queryName')) {
+            $queryConfigs[$queryName] = config('ksql.consumer.queries')[$queryName];
+        } else {
+            $queryConfigs = config('ksql.consumer.queries');
+        }
+
         $queries = [];
-        foreach (config('ksql.consumer.queries') as $name => $query) {
-            if (! is_array($query)) {
+        foreach ($queryConfigs as $name => $query) {
+            if (!is_array($query)) {
                 $query = [
                     'query' => $query,
                     'emit' => StreamChanged::class,
@@ -44,10 +52,11 @@ class ConsumerCommand extends Command
             $query['emit'] ??= StreamChanged::class;
             $query['offset'] ??= config('ksql.consumer.default_offset');
 
-            $pq = new PushQuery($name, $query['query'], fn () => null, $query['offset']);
+            $pq = new PushQuery($name, $query['query'], fn() => null, $query['offset']);
             $pq->eventClass = $query['emit'];
             $queries[] = $pq;
         }
+
         $client->streamAndEmit($queries);
     }
 }
