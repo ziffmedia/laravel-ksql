@@ -18,11 +18,7 @@ class Client extends KsqlClient
         }
         foreach ($query as $q) {
             $q->handler = function (PushQueryRow $row) {
-                /** @var PushQuery $query */
-                $query = $row->query;
-                $eventClass = $query->eventClass;
-                /** @var Dispatchable $eventClass */
-                $eventClass::dispatch($row);
+                event($row->query->eventClass, $row);
             };
         }
         $this->stream($query);
@@ -32,8 +28,7 @@ class Client extends KsqlClient
     {
         $results = $this->query($query);
         foreach ($results as $result) {
-            /** @var Dispatchable $eventClass */
-            $eventClass::dispatch($results->schema, $result);
+            event($eventClass, $results->schema, $result);
         }
     }
 }
