@@ -19,7 +19,7 @@ use Illuminate\Console\Command;
  */
 class ConsumerCommand extends Command
 {
-    protected $signature = 'ksql-consumer';
+    protected $signature = 'ksql:consume';
 
     protected $description = 'Consume KSQL streams and emit events';
 
