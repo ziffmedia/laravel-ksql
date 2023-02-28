@@ -18,7 +18,6 @@ class ConsumerCommand extends Command
             config('ksql.auth.password')
         );
 
-
         $queryConfigs = [];
         if ($queryName = $this->argument('queryName')) {
             $queryConfigs[$queryName] = config('ksql.consumer.queries')[$queryName];
@@ -28,7 +27,7 @@ class ConsumerCommand extends Command
 
         $queries = [];
         foreach ($queryConfigs as $name => $query) {
-            if (!is_array($query)) {
+            if (! is_array($query)) {
                 $query = [
                     'query' => $query,
                     'emit' => StreamChanged::class,
@@ -39,7 +38,7 @@ class ConsumerCommand extends Command
             $query['emit'] ??= StreamChanged::class;
             $query['offset'] ??= config('ksql.consumer.default_offset');
 
-            $pq = new PushQuery($name, $query['query'], fn() => null, $query['offset']);
+            $pq = new PushQuery($name, $query['query'], fn () => null, $query['offset']);
             $pq->eventClass = $query['emit'];
             $queries[] = $pq;
         }

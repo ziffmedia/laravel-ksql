@@ -2,7 +2,6 @@
 
 namespace ZiffMedia\LaravelKsql;
 
-use Illuminate\Foundation\Bus\Dispatchable;
 use ZiffMedia\Ksql\Client as KsqlClient;
 use ZiffMedia\Ksql\PushQueryRow;
 
