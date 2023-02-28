@@ -4,19 +4,6 @@ namespace ZiffMedia\LaravelKsql;
 
 use Illuminate\Console\Command;
 
-/**
- * 'consumer' => [
-'default_offset' => Offset::EARLIEST,
-'queries' => [
-'simple_example' => 'SELECT * FROM foo EMIT CHANGES',
-'custom_event_example' => [
-'query' => 'SELECT * FROM foo EMIT CHANGES',
-'emit' => App\Events\FooChanged::class,
-'offset' => Offset::LATEST,
-]
-],
-],
- */
 class ConsumerCommand extends Command
 {
     protected $signature = 'ksql:consume {queryName?}';
