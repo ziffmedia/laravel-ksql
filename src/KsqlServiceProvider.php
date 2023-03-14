@@ -30,4 +30,8 @@ class KsqlServiceProvider extends ServiceProvider
             __DIR__.'/../config/ksql.php' => config_path('ksql.php'),
         ], 'config');
     }
+
+    private function discoverResources()
+    {
+    }
 }

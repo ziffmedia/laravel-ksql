@@ -6,5 +6,5 @@ use ZiffMedia\Ksql\PushQuery as KsqlPushQuery;
 
 class PushQuery extends KsqlPushQuery
 {
-    public string $eventClass = StreamChanged::class;
+    public string $eventClass = KsqlChanged::class;
 }

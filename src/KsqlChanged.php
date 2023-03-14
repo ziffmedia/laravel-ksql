@@ -4,13 +4,12 @@ namespace ZiffMedia\LaravelKsql;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use ZiffMedia\Ksql\PushQueryRow;
 
-class StreamChanged
+class KsqlChanged
 {
     use Dispatchable, SerializesModels;
 
-    public function __construct(public PushQueryRow $data)
+    public function __construct(public array $data)
     {
     }
 }

@@ -30,12 +30,12 @@ class ConsumerCommand extends Command
             if (! is_array($query)) {
                 $query = [
                     'query' => $query,
-                    'emit' => StreamChanged::class,
+                    'emit' => KsqlChanged::class,
                     'offset' => config('ksql.consumer.default_offset'),
                 ];
             }
 
-            $query['emit'] ??= StreamChanged::class;
+            $query['emit'] ??= KsqlChanged::class;
             $query['offset'] ??= config('ksql.consumer.default_offset');
 
             $pq = new PushQuery($name, $query['query'], fn () => null, $query['offset']);
@@ -44,5 +44,9 @@ class ConsumerCommand extends Command
         }
 
         $client->streamAndEmit($queries);
+    }
+
+    private function loadResources()
+    {
     }
 }
