@@ -81,3 +81,8 @@ test('it should throw exceptions when impossible to produce catchup queries', fu
     };
     expect($kr->getCatchupQuery(...))->toThrow(Error::class);
 })->skip();
+
+test('it should generate correct event names', function() {
+    $kr = new KsqlResource();
+    expect($kr->getEventName())->toBe('ksql.ksql_resource');
+});

@@ -3,6 +3,7 @@
 namespace ZiffMedia\LaravelKsql;
 
 use ZiffMedia\Ksql\Client as KsqlClient;
+use ZiffMedia\Ksql\PullQuery;
 use ZiffMedia\Ksql\PushQueryRow;
 
 class Client extends KsqlClient
@@ -23,11 +24,11 @@ class Client extends KsqlClient
         $this->stream($query);
     }
 
-    public function queryAndEmit(string $query, string $eventClass = QueryResultReceived::class): void
+    public function queryAndEmit(string|PullQuery $query, $event): void
     {
         $results = $this->query($query);
         foreach ($results as $result) {
-            event($eventClass, $results->schema, $result);
+            event($event, $result);
         }
     }
 }

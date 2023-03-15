@@ -3,21 +3,27 @@
 namespace ZiffMedia\LaravelKsql;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use ZiffMedia\Ksql\Offset;
+use ZiffMedia\Ksql\PullQuery;
+use ZiffMedia\Ksql\PushQueryRow;
+use ZiffMedia\Ksql\ResultRow;
 
 class KsqlResource
 {
     public string $ksqlTable;
 
-    public ?string $ksqlUpdatedField;
+    public string $ksqlUpdatedField = 'updated_at';
 
     public bool $catchUpBeforeConsume = false;
+
+    public bool $shouldConsume = true;
 
     public ?string $model;
 
     public Offset $offset = Offset::LATEST;
 
-    public function handle(KsqlChanged $data)
+    public function handle(ResultRow $data)
     {
     }
 
@@ -26,9 +32,19 @@ class KsqlResource
         return sprintf('SELECT * FROM %s EMIT CHANGES;', $this->ksqlTable);
     }
 
-    public function getKsqlFillQuery(): string
+    public function getKsqlFillQuery(): PullQuery
     {
         return sprintf('SELECT * FROM %s;', $this->ksqlTable);
+    }
+
+    public function getKeyName()
+    {
+        return Str::snake(get_class($this));
+    }
+
+    public function getEventName()
+    {
+        return "ksql." . $this->getKeyName();
     }
 
     public function getCatchupQuery(): string

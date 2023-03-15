@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 
 class ConsumerCommand extends Command
 {
-    protected $signature = 'ksql:consume {queryName?}';
+    protected $signature = 'ksql:consume {resourceName?}';
 
     protected $description = 'Consume KSQL streams and emit events';
 
@@ -18,12 +18,21 @@ class ConsumerCommand extends Command
             config('ksql.auth.password')
         );
 
-        $queryConfigs = [];
-        if ($queryName = $this->argument('queryName')) {
-            $queryConfigs[$queryName] = config('ksql.consumer.queries')[$queryName];
+        $resourceManager = app(ResourceManager::class);
+        if ($resourceName = $this->argument('resourceName')) {
+            $resources = [$resourceManager->$resourceName];
         } else {
-            $queryConfigs = config('ksql.consumer.queries');
+            $resources = $resourceManager;
         }
+
+        /** @var KsqlResource $resource */
+        foreach ($resources as $resource) {
+            if ($resource->shouldConsume && $resource->catchUpBeforeConsume) {
+
+            }
+        }
+
+
 
         $queries = [];
         foreach ($queryConfigs as $name => $query) {
@@ -46,7 +55,4 @@ class ConsumerCommand extends Command
         $client->streamAndEmit($queries);
     }
 
-    private function loadResources()
-    {
-    }
 }
