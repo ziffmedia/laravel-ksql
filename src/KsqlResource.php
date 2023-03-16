@@ -4,6 +4,7 @@ namespace ZiffMedia\LaravelKsql;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass;
 use ZiffMedia\Ksql\Offset;
 use ZiffMedia\Ksql\PullQuery;
 use ZiffMedia\Ksql\PushQueryRow;
@@ -23,7 +24,7 @@ class KsqlResource
 
     public Offset $offset = Offset::LATEST;
 
-    public function handle(ResultRow $data)
+    public function handle(ResultRow $data): void
     {
     }
 
@@ -32,17 +33,17 @@ class KsqlResource
         return sprintf('SELECT * FROM %s EMIT CHANGES;', $this->ksqlTable);
     }
 
-    public function getKsqlFillQuery(): PullQuery
+    public function getKsqlFillQuery(): string
     {
         return sprintf('SELECT * FROM %s;', $this->ksqlTable);
     }
 
-    public function getKeyName()
+    public function getKeyName(): string
     {
-        return Str::snake(get_class($this));
+        return Str::snake(last(explode('\\', get_class($this))));
     }
 
-    public function getEventName()
+    public function getEventName(): string
     {
         return "ksql." . $this->getKeyName();
     }
