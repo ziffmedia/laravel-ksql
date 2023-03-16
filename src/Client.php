@@ -5,6 +5,7 @@ namespace ZiffMedia\LaravelKsql;
 use ZiffMedia\Ksql\Client as KsqlClient;
 use ZiffMedia\Ksql\PullQuery;
 use ZiffMedia\Ksql\PushQueryRow;
+use ZiffMedia\Ksql\ResultRow;
 
 class Client extends KsqlClient
 {
@@ -16,10 +17,13 @@ class Client extends KsqlClient
         if (! is_array($query)) {
             $query = [$query];
         }
+
+        $handler = function (ResultRow $row) {
+            event($row->query->event, $row);
+        };
+
         foreach ($query as $q) {
-            $q->handler = function (PushQueryRow $row) {
-                event($row->query->eventClass, $row);
-            };
+            $q->handler = $handler;
         }
         $this->stream($query);
     }

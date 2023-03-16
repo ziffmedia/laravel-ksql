@@ -2,6 +2,7 @@
 
 namespace ZiffMedia\LaravelKsql;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass;
@@ -20,7 +21,7 @@ class KsqlResource
 
     public bool $shouldConsume = true;
 
-    public ?string $model;
+    public string $model;
 
     public Offset $offset = Offset::LATEST;
 
@@ -53,8 +54,8 @@ class KsqlResource
         /** @var Model $stubModel */
         $stubModel = new $this->model;
         $updatedAtColumn = $stubModel->getUpdatedAtColumn();
-        $latestModel = $this->model::orderBy($updatedAtColumn, 'desc')->limit(1)->get();
-
-        return sprintf("SELECT * FROM %s WHERE %s >= '%s'", $this->ksqlTable, $this->ksqlUpdatedField, $latestModel->$updatedAtColumn);
+        $latestModel = $this->model::orderBy($updatedAtColumn, 'desc')->limit(1)->first();
+        $dateTime = (new Carbon($latestModel->$updatedAtColumn))->toIso8601String();
+        return sprintf("SELECT * FROM %s WHERE %s >= '%s'", $this->ksqlTable, $this->ksqlUpdatedField, $dateTime);
     }
 }

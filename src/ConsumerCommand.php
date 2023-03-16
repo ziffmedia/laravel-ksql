@@ -3,6 +3,7 @@
 namespace ZiffMedia\LaravelKsql;
 
 use Illuminate\Console\Command;
+use ZiffMedia\Ksql\PullQuery;
 
 class ConsumerCommand extends Command
 {
@@ -28,31 +29,23 @@ class ConsumerCommand extends Command
         /** @var KsqlResource $resource */
         foreach ($resources as $resource) {
             if ($resource->shouldConsume && $resource->catchUpBeforeConsume) {
-
+                $query = new PullQuery($resource->getCatchupQuery());
+                $client->queryAndEmit($query, $resource->getEventName());
             }
         }
 
-
-
-        $queries = [];
-        foreach ($queryConfigs as $name => $query) {
-            if (! is_array($query)) {
-                $query = [
-                    'query' => $query,
-                    'emit' => KsqlChanged::class,
-                    'offset' => config('ksql.consumer.default_offset'),
-                ];
+        $streamQueries = [];
+        /** @var KsqlResource $resource */
+        foreach ($resources as $resource) {
+            if ($resource->shouldConsume) {
+                $query = new PushQuery($resource->getKeyName(), $resource->getKsqlStreamQuery(), fn() => null, $resource->offset);
+                $query->event = $resource->getEventName();
+                $streamQueries[] = $query;
             }
-
-            $query['emit'] ??= KsqlChanged::class;
-            $query['offset'] ??= config('ksql.consumer.default_offset');
-
-            $pq = new PushQuery($name, $query['query'], fn () => null, $query['offset']);
-            $pq->eventClass = $query['emit'];
-            $queries[] = $pq;
         }
 
-        $client->streamAndEmit($queries);
+        
+        $client->streamAndEmit($streamQueries);
     }
 
 }
