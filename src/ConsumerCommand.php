@@ -38,14 +38,12 @@ class ConsumerCommand extends Command
         /** @var KsqlResource $resource */
         foreach ($resources as $resource) {
             if ($resource->shouldConsume) {
-                $query = new PushQuery($resource->getKeyName(), $resource->getKsqlStreamQuery(), fn() => null, $resource->offset);
+                $query = new PushQuery($resource->getKeyName(), $resource->getKsqlStreamQuery(), fn () => null, $resource->offset);
                 $query->event = $resource->getEventName();
                 $streamQueries[] = $query;
             }
         }
 
-        
         $client->streamAndEmit($streamQueries);
     }
-
 }

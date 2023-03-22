@@ -1,4 +1,5 @@
 <?php
+
 namespace ZiffMedia\LaravelKsql;
 
 class ResourceManager extends \ArrayObject

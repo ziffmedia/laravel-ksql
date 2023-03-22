@@ -59,10 +59,10 @@ test('it should produce correct catchup queries from table names', function () {
     {
         public string $ksqlTable = 'test';
 
-        public ?string $model = StubModel::class;
+        public string $model = TestModel::class;
     };
-    expect($kr->getCatchupQuery())->toBe('SELECT * FROM test;');
-})->skip();
+    expect($kr->getCatchupQuery())->toBe('SELECT * FROM test WHERE updated_at >= \'2023-01-01T11:55:00+00:00\'');
+});
 
 test('it should produce correct catchup queries from overridden function', function () {
     $kr = new class extends KsqlResource
@@ -80,9 +80,9 @@ test('it should throw exceptions when impossible to produce catchup queries', fu
     {
     };
     expect($kr->getCatchupQuery(...))->toThrow(Error::class);
-})->skip();
+});
 
-test('it should generate correct event names', function() {
+test('it should generate correct event names', function () {
     $kr = new KsqlResource();
     expect($kr->getEventName())->toBe('ksql.ksql_resource');
 });

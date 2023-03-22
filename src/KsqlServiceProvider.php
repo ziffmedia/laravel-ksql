@@ -2,24 +2,22 @@
 
 namespace ZiffMedia\LaravelKsql;
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
+use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 use ZiffMedia\Ksql\Client;
-use SplFileInfo;
 
 class KsqlServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->singleton(ResourceManager::class, fn() => new ResourceManager());
+        $this->app->singleton(ResourceManager::class, fn () => new ResourceManager());
 
         if ($this->app->runningInConsole()) {
             $this->commands([
                 ConsumerCommand::class,
-                FillCommand::class
+                FillCommand::class,
             ]);
             if (config('ksql.discover_resources') == DiscoverResources::CONSOLE) {
                 $this->discoverResources();
@@ -50,10 +48,10 @@ class KsqlServiceProvider extends ServiceProvider
     {
         $ksqlResourcesPath = app_path('Ksql');
         $finder = new Finder();
-        collect($finder->in($ksqlResourcesPath)->files()->name("*.php"))->each(function(SplFileInfo $file) {
+        collect($finder->in($ksqlResourcesPath)->files()->name('*.php'))->each(function (SplFileInfo $file) {
             $namespace = 'App\Ksql';
-            $strippedBaseName = str_replace(".php", '', $file->getBasename());
-            $className = $namespace . '\\' . $strippedBaseName;
+            $strippedBaseName = str_replace('.php', '', $file->getBasename());
+            $className = $namespace.'\\'.$strippedBaseName;
             /** @var KsqlResource $instance */
             $instance = new $className;
             app(ResourceManager::class)->{$instance->getKeyName()} = $instance;

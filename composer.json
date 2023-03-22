@@ -9,7 +9,10 @@
     "require-dev": {
         "orchestra/testbench": "^7.19",
         "laravel/pint": "^1.4",
-        "pestphp/pest": "^1.22"
+        "pestphp/pest": "^1.22",
+        "mockery/mockery": "^1.5",
+        "calebporzio/sushi": "^2.4",
+        "pestphp/pest-plugin-laravel": "^1.4"
     },
     "license": "MIT",
     "autoload": {

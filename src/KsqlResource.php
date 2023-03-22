@@ -5,10 +5,7 @@ namespace ZiffMedia\LaravelKsql;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass;
 use ZiffMedia\Ksql\Offset;
-use ZiffMedia\Ksql\PullQuery;
-use ZiffMedia\Ksql\PushQueryRow;
 use ZiffMedia\Ksql\ResultRow;
 
 class KsqlResource
@@ -24,6 +21,9 @@ class KsqlResource
     public string $model;
 
     public Offset $offset = Offset::LATEST;
+
+    /** @var int seconds to look back for catchup */
+    public int $lookback = 300;
 
     public function handle(ResultRow $data): void
     {
@@ -46,16 +46,25 @@ class KsqlResource
 
     public function getEventName(): string
     {
-        return "ksql." . $this->getKeyName();
+        return 'ksql.'.$this->getKeyName();
     }
 
     public function getCatchupQuery(): string
     {
+        $latestModel = $this->getLatestModel();
+        $dateTime = new Carbon($latestModel->{$latestModel->getUpdatedAtColumn()});
+        $dateTime->modify("-$this->lookback seconds");
+        $isoString = $dateTime->toIso8601String();
+
+        return sprintf("SELECT * FROM %s WHERE %s >= '%s'", $this->ksqlTable, $this->ksqlUpdatedField, $isoString);
+    }
+
+    private function getLatestModel(): Model
+    {
         /** @var Model $stubModel */
         $stubModel = new $this->model;
         $updatedAtColumn = $stubModel->getUpdatedAtColumn();
-        $latestModel = $this->model::orderBy($updatedAtColumn, 'desc')->limit(1)->first();
-        $dateTime = (new Carbon($latestModel->$updatedAtColumn))->toIso8601String();
-        return sprintf("SELECT * FROM %s WHERE %s >= '%s'", $this->ksqlTable, $this->ksqlUpdatedField, $dateTime);
+
+        return $this->model::orderBy($updatedAtColumn, 'desc')->limit(1)->first();
     }
 }

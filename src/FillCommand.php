@@ -32,5 +32,4 @@ class FillCommand extends Command
             $client->queryAndEmit($query, $resource->getEventName());
         }
     }
-
 }

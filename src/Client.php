@@ -4,7 +4,6 @@ namespace ZiffMedia\LaravelKsql;
 
 use ZiffMedia\Ksql\Client as KsqlClient;
 use ZiffMedia\Ksql\PullQuery;
-use ZiffMedia\Ksql\PushQueryRow;
 use ZiffMedia\Ksql\ResultRow;
 
 class Client extends KsqlClient
