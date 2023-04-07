@@ -7,7 +7,7 @@ use ZiffMedia\Ksql\PullQuery;
 
 class FillCommand extends Command
 {
-    protected $signature = 'ksql:fill {resourceName?} {resourceId?}';
+    protected $signature = 'ksql:fill {resourceName?} {resourceIds?*}';
 
     protected $description = 'Consume KSQL entire tables and emit events';
 
@@ -26,9 +26,15 @@ class FillCommand extends Command
             $resources = $resourceManager;
         }
 
+        if ($this->argument('resourceIds')) {
+            $resourceIds = collect($this->argument('resourceIds'));
+        } else {
+            $resourceIds = null;
+        }
+
         /** @var KsqlResource $resource */
         foreach ($resources as $resource) {
-            $query = new PullQuery($resource->getKsqlFillQuery($this->argument('resourceId')));
+            $query = new PullQuery($resource->getKsqlFillQuery($resourceIds));
             $client->queryAndEmit($query, $resource->getEventName());
         }
     }
