@@ -14,6 +14,8 @@ class KsqlResource
 
     public string $ksqlUpdatedField = 'updated_at';
 
+    public string $ksqlIdField = 'uuid';
+
     public bool $catchUpBeforeConsume = false;
 
     public bool $shouldConsume = true;
@@ -34,9 +36,13 @@ class KsqlResource
         return sprintf('SELECT * FROM %s EMIT CHANGES;', $this->ksqlTable);
     }
 
-    public function getKsqlFillQuery(): string
+    public function getKsqlFillQuery($resourceId = null): string
     {
-        return sprintf('SELECT * FROM %s;', $this->ksqlTable);
+        if ($resourceId) {
+            return sprintf("SELECT * FROM %s; WHERE %s = '%s'", $this->ksqlTable, $this->ksqlIdField, $resourceId);
+        } else {
+            return sprintf('SELECT * FROM %s;', $this->ksqlTable);
+        }
     }
 
     public function getKeyName(): string
