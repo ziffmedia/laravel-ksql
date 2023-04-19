@@ -7,7 +7,8 @@ use ZiffMedia\Ksql\PullQuery;
 
 class ConsumerCommand extends Command
 {
-    protected $signature = 'ksql:consume {resourceName?}';
+    protected $signature = 'ksql:consume
+                            {resourceName? : Optional specific resource to begin consuming}';
 
     protected $description = 'Consume KSQL streams and emit events';
 

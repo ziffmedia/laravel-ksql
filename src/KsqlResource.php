@@ -4,6 +4,7 @@ namespace ZiffMedia\LaravelKsql;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ZiffMedia\Ksql\Offset;
 use ZiffMedia\Ksql\ResultRow;
@@ -13,6 +14,8 @@ class KsqlResource
     public string $ksqlTable;
 
     public string $ksqlUpdatedField = 'updated_at';
+
+    public string $ksqlIdField = 'id';
 
     public bool $catchUpBeforeConsume = false;
 
@@ -34,9 +37,17 @@ class KsqlResource
         return sprintf('SELECT * FROM %s EMIT CHANGES;', $this->ksqlTable);
     }
 
-    public function getKsqlFillQuery(): string
+    public function getKsqlFillQuery($resourceIds = null): string
     {
-        return sprintf('SELECT * FROM %s;', $this->ksqlTable);
+        if ($resourceIds) {
+            if (! ($resourceIds instanceof Collection)) {
+                $resourceIds = collect($resourceIds);
+            }
+
+            return sprintf("SELECT * FROM %s WHERE %s IN ('%s');", $this->ksqlTable, $this->ksqlIdField, $resourceIds->implode("','"));
+        } else {
+            return sprintf('SELECT * FROM %s;', $this->ksqlTable);
+        }
     }
 
     public function getKeyName(): string

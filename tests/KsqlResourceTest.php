@@ -36,10 +36,46 @@ test('it should produce correct fill queries from table names', function () {
     expect($kr->getKsqlFillQuery())->toBe('SELECT * FROM test;');
 });
 
+test('it should produce correct fill queries when given a resource id', function () {
+    $kr = new class extends KsqlResource
+    {
+        public string $ksqlTable = 'test';
+    };
+    expect($kr->getKsqlFillQuery('1004'))->toBe("SELECT * FROM test WHERE id IN ('1004');");
+});
+
+test('it should produce correct fill queries when given a differing input argument types', function () {
+    $kr = new class extends KsqlResource
+    {
+        public string $ksqlTable = 'test';
+    };
+    expect($kr->getKsqlFillQuery('1004'))->toBe("SELECT * FROM test WHERE id IN ('1004');");
+    expect($kr->getKsqlFillQuery(['1004']))->toBe("SELECT * FROM test WHERE id IN ('1004');");
+    expect($kr->getKsqlFillQuery(collect('1004')))->toBe("SELECT * FROM test WHERE id IN ('1004');");
+});
+
+test('it should produce correct fill queries when given a collection of resource ids', function () {
+    $kr = new class extends KsqlResource
+    {
+        public string $ksqlTable = 'test';
+    };
+    expect($kr->getKsqlFillQuery(['1004', '79']))->toBe("SELECT * FROM test WHERE id IN ('1004','79');");
+});
+
+test('it should produce correct fill queries with id field', function () {
+    $kr = new class extends KsqlResource
+    {
+        public string $ksqlTable = 'test';
+
+        public string $ksqlIdField = 'foo';
+    };
+    expect($kr->getKsqlFillQuery('1004'))->toBe("SELECT * FROM test WHERE foo IN ('1004');");
+});
+
 test('it should produce correct fill queries from overridden function', function () {
     $kr = new class extends KsqlResource
     {
-        public function getKsqlFillQuery(): string
+        public function getKsqlFillQuery($resourceIds = null): string
         {
             return 'test';
         }
