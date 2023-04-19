@@ -7,7 +7,9 @@ use ZiffMedia\Ksql\PullQuery;
 
 class FillCommand extends Command
 {
-    protected $signature = 'ksql:fill {resourceName?} {resourceIds?*}';
+    protected $signature = 'ksql:fill
+                            {resourceName? : Optional specific resource to fill}
+                            {resourceIds?* : Optional list of specific resource ids to fill}';
 
     protected $description = 'Consume KSQL entire tables and emit events';
 
