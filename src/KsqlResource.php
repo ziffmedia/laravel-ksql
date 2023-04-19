@@ -8,7 +8,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ZiffMedia\Ksql\Offset;
 use ZiffMedia\Ksql\ResultRow;
-use Traversable;
 
 class KsqlResource
 {
@@ -44,6 +43,7 @@ class KsqlResource
             if (! ($resourceIds instanceof Collection)) {
                 $resourceIds = collect($resourceIds);
             }
+
             return sprintf("SELECT * FROM %s WHERE %s IN ('%s');", $this->ksqlTable, $this->ksqlIdField, $resourceIds->implode("','"));
         } else {
             return sprintf('SELECT * FROM %s;', $this->ksqlTable);

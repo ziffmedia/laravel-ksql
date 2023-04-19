@@ -66,12 +66,11 @@ test('it should produce correct fill queries with id field', function () {
     $kr = new class extends KsqlResource
     {
         public string $ksqlTable = 'test';
+
         public string $ksqlIdField = 'foo';
     };
     expect($kr->getKsqlFillQuery('1004'))->toBe("SELECT * FROM test WHERE foo IN ('1004');");
 });
-
-
 
 test('it should produce correct fill queries from overridden function', function () {
     $kr = new class extends KsqlResource
