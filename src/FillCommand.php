@@ -28,15 +28,9 @@ class FillCommand extends Command
             $resources = $resourceManager;
         }
 
-        if ($this->argument('resourceIds')) {
-            $resourceIds = collect($this->argument('resourceIds'));
-        } else {
-            $resourceIds = null;
-        }
-
         /** @var KsqlResource $resource */
         foreach ($resources as $resource) {
-            $query = new PullQuery($resource->getKsqlFillQuery($resourceIds));
+            $query = new PullQuery($resource->getKsqlFillQuery($this->argument('resourceIds')));
             $client->queryAndEmit($query, $resource->getEventName());
         }
     }
