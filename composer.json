@@ -3,7 +3,7 @@
     "type": "library",
     "require": {
         "php": "^8.1",
-        "ziffmedia/ksql": "^0.3"
+        "ziffmedia/ksql": "^0.4"
     },
 
     "require-dev": {
