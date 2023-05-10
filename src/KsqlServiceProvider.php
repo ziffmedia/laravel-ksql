@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 use ZiffMedia\Ksql\Client;
+use ZiffMedia\Ksql\ContentType;
 
 class KsqlServiceProvider extends ServiceProvider
 {
@@ -29,11 +30,13 @@ class KsqlServiceProvider extends ServiceProvider
         }
 
         $this->app->bind(Client::class, function () {
-            return new Client(
+            $client = new Client(
                 config('ksql.endpoint'),
                 config('ksql.auth.username'),
                 config('ksql.auth.password')
             );
+            $client->setAcceptContentType(config('ksql.client_content_type', ContentType::V1_DELIMITTED));
+            return $client;
         });
     }
 

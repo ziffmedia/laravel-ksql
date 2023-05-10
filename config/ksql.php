@@ -1,6 +1,7 @@
 <?php
 
 use ZiffMedia\LaravelKsql\DiscoverResources;
+use ZiffMedia\Ksql\ContentType;
 
 return [
     'endpoint' => env('KSQL_ENDPOINT'),
@@ -9,4 +10,5 @@ return [
         'password' => env('KSQL_PASSWORD'),
     ],
     'discover_resources' => DiscoverResources::CONSOLE,
+    'client_content_type' => ContentType::V1_JSON,
 ];
