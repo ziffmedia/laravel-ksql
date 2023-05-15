@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ZiffMedia\Ksql\Offset;
 use ZiffMedia\Ksql\ResultRow;
+use ZiffMedia\Ksql\TombstoneRow;
 
 class KsqlResource
 {
@@ -29,6 +30,10 @@ class KsqlResource
     public int $lookback = 300;
 
     public function handle(ResultRow $data): void
+    {
+    }
+
+    public function handleTombstone(TombstoneRow $data): void
     {
     }
 
@@ -58,6 +63,11 @@ class KsqlResource
     public function getEventName(): string
     {
         return 'ksql.'.$this->getKeyName();
+    }
+
+    public function getTombstoneEventName(): string
+    {
+        return $this->getEventName().'.tombstone';
     }
 
     public function getCatchupQuery(): string

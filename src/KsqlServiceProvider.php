@@ -36,6 +36,7 @@ class KsqlServiceProvider extends ServiceProvider
                 config('ksql.auth.password')
             );
             $client->setAcceptContentType(config('ksql.client_content_type', ContentType::V1_DELIMITTED));
+
             return $client;
         });
     }
@@ -59,6 +60,7 @@ class KsqlServiceProvider extends ServiceProvider
             $instance = new $className;
             app(ResourceManager::class)->{$instance->getKeyName()} = $instance;
             Event::listen($instance->getEventName(), [$instance, 'handle']);
+            Event::listen($instance->getTombstoneEventName(), [$instance, 'handleTombstone']);
         });
     }
 }
