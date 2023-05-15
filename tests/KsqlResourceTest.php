@@ -122,3 +122,8 @@ test('it should generate correct event names', function () {
     $kr = new KsqlResource();
     expect($kr->getEventName())->toBe('ksql.ksql_resource');
 });
+
+test('it should generate tombstone event names', function () {
+    $kr = new KsqlResource();
+    expect($kr->getTombstoneEventName())->toBe('ksql.ksql_resource.tombstone');
+});

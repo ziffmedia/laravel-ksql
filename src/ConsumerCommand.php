@@ -41,6 +41,7 @@ class ConsumerCommand extends Command
             if ($resource->shouldConsume) {
                 $query = new PushQuery($resource->getKeyName(), $resource->getKsqlStreamQuery(), fn () => null, $resource->offset);
                 $query->event = $resource->getEventName();
+                $query->tombstoneEvent = $resource->getTombstoneEventName();
                 $streamQueries[] = $query;
             }
         }

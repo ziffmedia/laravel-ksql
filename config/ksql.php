@@ -1,7 +1,7 @@
 <?php
 
-use ZiffMedia\LaravelKsql\DiscoverResources;
 use ZiffMedia\Ksql\ContentType;
+use ZiffMedia\LaravelKsql\DiscoverResources;
 
 return [
     'endpoint' => env('KSQL_ENDPOINT'),

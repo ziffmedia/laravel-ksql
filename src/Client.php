@@ -5,6 +5,7 @@ namespace ZiffMedia\LaravelKsql;
 use ZiffMedia\Ksql\Client as KsqlClient;
 use ZiffMedia\Ksql\PullQuery;
 use ZiffMedia\Ksql\ResultRow;
+use ZiffMedia\Ksql\TombstoneRow;
 
 class Client extends KsqlClient
 {
@@ -18,7 +19,11 @@ class Client extends KsqlClient
         }
 
         $handler = function (ResultRow $row) {
-            event($row->query->event, $row);
+            if ($row instanceof TombstoneRow) {
+                event($row->query->tombstoneEvent, $row);
+            } else {
+                event($row->query->event, $row);
+            }
         };
 
         foreach ($query as $q) {
